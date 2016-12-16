@@ -1,9 +1,15 @@
 class ArticlesController < ApplicationController
 
-    http_basic_authenticate_with name: "admin", password: "admin", except: [:index, :show]
+    # http_basic_authenticate_with name: "admin", password: "admin", except: [:index, :show]
 
     def index
         @articles = Article.all
+        result = []
+        @articles.each do |a|
+            result.push({:article => a,:comments => a.comments})
+        end
+        flash.now[:alert] = "Your book was not found"
+        # render :json => result
     end
 
     def show
